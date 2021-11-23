@@ -164,7 +164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6002098583513258615, guid: 28e986407c3aef64bb2c418a7616b0e8, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6002098583513258615, guid: 28e986407c3aef64bb2c418a7616b0e8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -216,6 +216,55 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 0ba460d1460b0d446ae5bd9efbbe0c69, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28e986407c3aef64bb2c418a7616b0e8, type: 3}
+--- !u!1 &283036128 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2593212673659134978, guid: 8fdb521cb0f1e094fbbfc9e8a490c94f, type: 3}
+  m_PrefabInstance: {fileID: 800962880}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &283036129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283036128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18f4c2ff35093e429b1a0473729b0c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &283036130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283036128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aaa46246e706dd48a11c27ca02d32e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &283036131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283036128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71aa7f26c61a88c44adfe390b53d1399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionsAvailable:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &334941800
 GameObject:
   m_ObjectHideFlags: 0
