@@ -22,14 +22,49 @@ namespace TL.UtilityAI
 
         }
 
+        // Loop through all the available actions 
+        // Give me the highest scoring action
         public void DecideBestAction(Action[] actionsAvailable)
         {
+            float score = 0f;
+            int nextBestActionIndex = 0;
+            for (int i = 0; i < actionsAvailable.Length; i++)
+            {
+                if (ScoreAction(actionsAvailable[i]) > score)
+                {
+                    nextBestActionIndex = i;
+                    score = actionsAvailable[i].score;
+                }
+            }
 
+            bestAction = actionsAvailable[nextBestActionIndex];
         }
 
-        public void ScoreAction(Action action)
+        // Loop through all the considerations of the action
+        // Score all the considerations
+        // Average the consideration scores ==> overall action score
+        public float ScoreAction(Action action)
         {
+            float score = 1f;
+            for (int i = 0; i < action.considerations.Length; i++)
+            {
+                float considerationScore = action.considerations[i].ScoreConsideration();
+                score *= considerationScore;
 
+                if (score == 0)
+                {
+                    action.score = 0;
+                    return action.score; // No point computing further
+                }
+            }
+
+            // Averaging scheme of overall score
+            float originalScore = score;
+            float modFactor = 1 - (1 / action.considerations.Length);
+            float makeupValue = (1 - originalScore) * modFactor;
+            action.score = originalScore + (makeupValue * originalScore);
+
+            return action.score;
         }
 
 
