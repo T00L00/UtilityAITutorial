@@ -7,8 +7,10 @@ namespace TL.UtilityAI
 {
     public class AIBrain : MonoBehaviour
     {
+        public bool finishedDeciding { get; set; }
         public Action bestAction { get; set; }
         private NPCController npc;
+
 
         // Start is called before the first frame update
         void Start()
@@ -19,7 +21,10 @@ namespace TL.UtilityAI
         // Update is called once per frame
         void Update()
         {
-
+            if (bestAction is null)
+            {
+                DecideBestAction(npc.actionsAvailable);
+            }
         }
 
         // Loop through all the available actions 
@@ -38,6 +43,7 @@ namespace TL.UtilityAI
             }
 
             bestAction = actionsAvailable[nextBestActionIndex];
+            finishedDeciding = true;
         }
 
         // Loop through all the considerations of the action

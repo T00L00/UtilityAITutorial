@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TL.Core;
 
 namespace TL.UtilityAI
 {
@@ -24,6 +25,6 @@ namespace TL.UtilityAI
             score = 0;
         }
 
-        public abstract void Execute();
+        public abstract void Execute(NPCController npc);
     }
 }
