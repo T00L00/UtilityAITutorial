@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TL.Core;
+using TL.UI;
 
 namespace TL.UtilityAI
 {
@@ -10,7 +11,7 @@ namespace TL.UtilityAI
         public bool finishedDeciding { get; set; }
         public Action bestAction { get; set; }
         private NPCController npc;
-
+        [SerializeField] private Billboard billBoard;
 
         // Start is called before the first frame update
         void Start()
@@ -44,6 +45,7 @@ namespace TL.UtilityAI
 
             bestAction = actionsAvailable[nextBestActionIndex];
             finishedDeciding = true;
+            billBoard.UpdateBestActionText(bestAction.Name);
         }
 
         // Loop through all the considerations of the action
@@ -54,7 +56,7 @@ namespace TL.UtilityAI
             float score = 1f;
             for (int i = 0; i < action.considerations.Length; i++)
             {
-                float considerationScore = action.considerations[i].ScoreConsideration();
+                float considerationScore = action.considerations[i].ScoreConsideration(npc);
                 score *= considerationScore;
 
                 if (score == 0)

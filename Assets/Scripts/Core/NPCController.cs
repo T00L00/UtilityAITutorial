@@ -9,6 +9,10 @@ namespace TL.Core
     {
         public MoveController mover { get; set; }
         public AIBrain aiBrain { get; set; }
+        public NPCInventory Inventory { get; set; }
+        public Stats stats { get; set; }
+
+        public Context context;
         public Action[] actionsAvailable;
 
         // Start is called before the first frame update
@@ -16,6 +20,8 @@ namespace TL.Core
         {
             mover = GetComponent<MoveController>();
             aiBrain = GetComponent<AIBrain>();
+            Inventory = GetComponent<NPCInventory>();
+            stats = GetComponent<Stats>();
         }
 
         // Update is called once per frame
@@ -26,12 +32,24 @@ namespace TL.Core
                 aiBrain.finishedDeciding = false;
                 aiBrain.bestAction.Execute(this);
             }
+
+            stats.UpdateEnergy(AmIAtRestDestination());
+            stats.UpdateHunger();
         }
+
+        #region Workhorse methods
 
         public void OnFinishedAction()
         {
             aiBrain.DecideBestAction(actionsAvailable);
         }
+
+        public bool AmIAtRestDestination()
+        {
+            return Vector3.Distance(this.transform.position, context.home.transform.position) <= context.MinDistance;
+        }
+
+        #endregion
 
         #region Coroutine
 
@@ -54,8 +72,9 @@ namespace TL.Core
                 counter--;
             }
 
-            Debug.Log("I just harvested 1 resource!");
+            Debug.Log("I AM WORKING!");
             // Logic to update things involved with work
+            Inventory.AddResource(ResourceType.wood, 10);
 
             // Decide our new best action after you finished this one
             OnFinishedAction();
@@ -72,6 +91,7 @@ namespace TL.Core
 
             Debug.Log("I slept and gained 1 energy!");
             // Logic to update energy
+            stats.energy += 1;
 
             // Decide our new best action after you finished this one
             OnFinishedAction();

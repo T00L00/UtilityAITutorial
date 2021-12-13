@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3942e4841997a504fa2cebcfef01d70a, type: 3}
   m_Name: Work
   m_EditorClassIdentifier: 
-  npc: {fileID: 0}
-  Name: 
-  considerations: []
+  Name: WORK
+  considerations:
+  - {fileID: 11400000, guid: de757d40ab6827f4a8127986e2b79918, type: 2}

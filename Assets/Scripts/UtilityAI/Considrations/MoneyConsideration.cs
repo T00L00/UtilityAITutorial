@@ -9,9 +9,11 @@ namespace TL.UtilityAI.Considerations
     [CreateAssetMenu(fileName = "MoneyConsideration", menuName = "UtilityAI/Considerations/Money Consideration")]
     public class MoneyConsideration : Consideration
     {
-        public override float ScoreConsideration()
+        [SerializeField] private AnimationCurve responseCurve;
+        public override float ScoreConsideration(NPCController npc)
         {
-            return 0.1f;
+            score = responseCurve.Evaluate(Mathf.Clamp01(npc.stats.money / 1000f));
+            return score;
         }
     }
 }
