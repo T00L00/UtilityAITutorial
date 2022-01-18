@@ -8,6 +8,7 @@ namespace TL.Core
     public class MoveController : MonoBehaviour
     {
         private NavMeshAgent agent;
+        public Transform destination;
 
         // Start is called before the first frame update
         void Start()

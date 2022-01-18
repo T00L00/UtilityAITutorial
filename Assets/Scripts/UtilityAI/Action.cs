@@ -20,11 +20,15 @@ namespace TL.UtilityAI
 
         public Consideration[] considerations;
 
+        public Transform RequiredDestination { get; protected set; }
+
         public virtual void Awake()
         {
             score = 0;
         }
 
         public abstract void Execute(NPCController npc);
+
+        public virtual void SetRequiredDestination(NPCController npc) { }
     }
 }

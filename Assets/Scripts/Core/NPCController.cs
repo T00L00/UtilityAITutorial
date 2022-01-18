@@ -5,6 +5,13 @@ using TL.UtilityAI;
 
 namespace TL.Core
 {
+    public enum State
+    {
+        decide,
+        move,
+        execute
+    }
+
     public class NPCController : MonoBehaviour
     {
         public MoveController mover { get; set; }
@@ -12,8 +19,9 @@ namespace TL.Core
         public NPCInventory Inventory { get; set; }
         public Stats stats { get; set; }
 
-        public Context context;
-        public Action[] actionsAvailable;
+        public Context context;        
+
+        public State currentState { get; set; }
 
         // Start is called before the first frame update
         void Start()
@@ -22,26 +30,64 @@ namespace TL.Core
             aiBrain = GetComponent<AIBrain>();
             Inventory = GetComponent<NPCInventory>();
             stats = GetComponent<Stats>();
+            currentState = State.decide;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (aiBrain.finishedDeciding)
-            {
-                aiBrain.finishedDeciding = false;
-                aiBrain.bestAction.Execute(this);
-            }
+            FSMTick();
+        }
 
-            stats.UpdateEnergy(AmIAtRestDestination());
-            stats.UpdateHunger();
+        public void FSMTick()
+        {
+            if (currentState == State.decide)
+            {
+                aiBrain.DecideBestAction();
+
+                if (Vector3.Distance(aiBrain.bestAction.RequiredDestination.position, this.transform.position) < 2f)
+                {
+                    currentState = State.execute;
+                }
+                else
+                {
+                    currentState = State.move;
+                }
+            }
+            else if (currentState == State.move)
+            {
+                float distance = Vector3.Distance(aiBrain.bestAction.RequiredDestination.position, this.transform.position);
+                Debug.Log($"Destination: {mover.destination.name} | Distance: {distance}");
+                if ( distance < 2f)
+                {
+                    currentState = State.execute;
+                }
+                else
+                {
+                    Debug.Log("Still moving!");
+                    mover.MoveTo(aiBrain.bestAction.RequiredDestination.position);
+                }
+            }
+            else if (currentState == State.execute)
+            {
+                if (aiBrain.finishedExecutingBestAction == false)
+                {
+                    Debug.Log("Executing action");
+                    aiBrain.bestAction.Execute(this);
+                }
+                else if (aiBrain.finishedExecutingBestAction == true)
+                {
+                    Debug.Log("Exit execute state");
+                    currentState = State.decide;
+                }
+            }
         }
 
         #region Workhorse methods
 
         public void OnFinishedAction()
         {
-            aiBrain.DecideBestAction(actionsAvailable);
+            aiBrain.DecideBestAction();
         }
 
         public bool AmIAtRestDestination()
@@ -77,7 +123,9 @@ namespace TL.Core
             Inventory.AddResource(ResourceType.wood, 10);
 
             // Decide our new best action after you finished this one
-            OnFinishedAction();
+            //OnFinishedAction();
+            aiBrain.finishedExecutingBestAction = true;
+            yield break;
         }
 
         IEnumerator SleepCoroutine(int time)
@@ -91,10 +139,12 @@ namespace TL.Core
 
             Debug.Log("I slept and gained 1 energy!");
             // Logic to update energy
-            stats.energy += 1;
+            stats.energy += 5;
 
             // Decide our new best action after you finished this one
-            OnFinishedAction();
+            //OnFinishedAction();
+            aiBrain.finishedExecutingBestAction = true;
+            yield break;
         }
 
 

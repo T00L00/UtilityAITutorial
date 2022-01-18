@@ -13,5 +13,11 @@ namespace TL.UtilityAI.Actions
         {
             npc.DoSleep(3);
         }
+
+        public override void SetRequiredDestination(NPCController npc)
+        {
+            RequiredDestination = npc.context.home.transform;
+            npc.mover.destination = RequiredDestination;
+        }
     }
 }

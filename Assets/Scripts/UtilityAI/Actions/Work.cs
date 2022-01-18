@@ -13,5 +13,25 @@ namespace TL.UtilityAI.Actions
         {
             npc.DoWork(3);
         }
+
+        public override void SetRequiredDestination(NPCController npc)
+        {
+            float distance = Mathf.Infinity;
+            Transform nearestResource = null;
+
+            List<Transform> resources = npc.context.Destinations[DestinationType.resource];
+            foreach (Transform resource in resources)
+            {
+                float distanceFromResource = Vector3.Distance(resource.position, npc.transform.position);
+                if (distanceFromResource < distance)
+                {
+                    nearestResource = resource;
+                    distance = distanceFromResource;
+                }
+            }
+
+            RequiredDestination = nearestResource;
+            npc.mover.destination = RequiredDestination;
+        }
     }
 }
