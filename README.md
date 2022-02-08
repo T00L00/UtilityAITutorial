@@ -49,10 +49,10 @@ public class Sleep : Consideration {
 Every action you define will have a list of considerations that the AIBrain can use to evaluate how important that action is at the moment. It is important for you to decide what game data is important for the NPC to consider for an action. For example, the Sleep Action might need to consider the NPC's energy level, the time of day, and if it is still at work. That means, create 3 considerations, implement their scoring logic, then drag their scriptable objects onto the Sleep Action scriptable object.
 
 ### AIBrain : Monobehaviour
-This monobehavior is responsible for performing the core Utility AI calculations, which are scoring considerations and ranking actions based on their scores. The logic is explained here in [Part 3](https://www.youtube.com/watch?v=c23PJLSNYXs "Part 3").
+This monobehavior is where you drop all your definded action scriptable objects. `AIBrain` is responsible for performing the core Utility AI calculations, which are scoring considerations and ranking actions based on their scores. The logic is explained here in [Part 3](https://www.youtube.com/watch?v=c23PJLSNYXs "Part 3").
 
 ### NPCController : Monobehaviour
-This monobehavior is the central place where the Utility AI is run and accesses in-game data and/or other useful methods. Notice that `Action` and `Consideration` calls `NPCController` for use in their `Execute()` and `ScoreConsideration()` methods.
+This monobehavior is the central place where the Utility AI is kickstarted using in-game data obtained through the NPC's perception of the world. You might have visual sensors, audio sensors, knowledge-base references all in `NPCController` so that the Utility AI can get the information it needs for decision-making. Notice that `Action` and `Consideration` calls `NPCController` for use in their `Execute()` and `ScoreConsideration()` methods.
 
 ## How does this prototype AI handle NPC movement?
 In the project, I implemented a very simple FSM to control movement. The FSM has 3 states:
