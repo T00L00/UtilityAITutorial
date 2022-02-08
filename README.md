@@ -37,7 +37,7 @@ Typically, considerations are all scored on a scale of 0 to 1. In other words, a
 
 ```csharp
 [CreateAssetMenu(fileName = "Sleep", menuName = "UtilityAI/Actions/Sleep")]
-public class Sleep : Consideration {
+public class Sleep : Action {
 
 	public override void Execute(NPCController npc) {
 		//play sleep animation
