@@ -12,6 +12,9 @@ In finite state machines and/or behavior trees, the typical logic would be to ju
 
 With Utility AI, the villager can instead compare how urgent working, eating, and sleeping are to each other by looking at various game data in the world -- time of day, how much money does it have compared to a specific item at a merchant store, how far away is the food market, etc. Utility AI gives you the freedom to define what certain information means to the NPC, and the NPC will use that information to determine what action it should perform next. Because the game world is constantly evolving with time, the NPC will be able to make decisions dynamically and possibly give rise to interesting emergent behaviors you might not expect at first glance.
 
+## How is this Utility AI is set up?
+I go over this in depth in [Part 1](https://www.youtube.com/watch?v=ejKrvhusU1I). The NPC is given a set of possible actions it can perform. Every action has a list of considerations that determine how important that action is relative to all other actions. Each consideration is a way to score in-game data (e.g. NPC hunger, energy level, wealth, time of day, etc.) to see how much that in-game data affects the importance of the action. The list of consideration scores for one action will be combined to give an overall score for that action. Every decision cycle, the NPC will go down the list of possible actions and calculate a score for each action. The highest scoring action will then be performed.
+
 ## What's the architecture for this prototype Utility AI?
 When creating this prototype, I wanted the user to be able to just drag and drop defined actions onto an `AIBrain` monobehavior then hit run. To accomplish this, I built this AI around using scriptable objects. The core classes are described below. 
 
